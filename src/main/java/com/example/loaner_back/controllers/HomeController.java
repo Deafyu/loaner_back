@@ -2,6 +2,7 @@ package com.example.loaner_back.controllers;
 
 import com.example.loaner_back.service.UserService;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -10,11 +11,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
     UserService userService;
 
+    @Autowired
     public HomeController(UserService userService) {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/login")
+    @PostMapping(value = "/login")
     public String login() {
         return "login";
     }
