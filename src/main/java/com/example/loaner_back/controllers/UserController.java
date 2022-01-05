@@ -6,4 +6,5 @@ import org.springframework.web.bind.annotation.RestController;
 @FieldDefaults(makeFinal = true)
 @RestController
 public class UserController {
+
 }

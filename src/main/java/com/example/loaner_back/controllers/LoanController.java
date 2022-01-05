@@ -1,8 +1,10 @@
 package com.example.loaner_back.controllers;
 
 import com.example.loaner_back.entity.LoanEntity;
+import com.example.loaner_back.service.LoanService;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.cfg.NotYetImplementedException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,41 +13,49 @@ import java.util.List;
 @FieldDefaults(makeFinal = true)
 @RestController
 public class LoanController {
+    LoanService loanService;
+
+    @Autowired
+    public LoanController(LoanService loanService) {
+        this.loanService = loanService;
+    }
 
     @GetMapping(value = "/loans")
-    public List<LoanEntity> getAllLoans(){
-        throw new NotYetImplementedException();
+    public List<LoanEntity> getAllLoans() {
+        return loanService.getAllLoans();
     }
 
     @GetMapping(value = "/loans?lender={lender}")
-    public List<LoanEntity> getAllLoansFromLender(@PathVariable String lender){
-        throw new NotYetImplementedException();
+    public List<LoanEntity> getAllLoansFromLender(@PathVariable String lender) {
+        return loanService.getAllLoansFromLender(lender);
     }
 
     @GetMapping(value = "/loans?lender={lender}&id={id}")
-    public LoanEntity getLoanDetails(@PathVariable String lender, @PathVariable long id){
+    public LoanEntity getLoanDetails(@PathVariable String lender, @PathVariable long id) {
         throw new NotYetImplementedException();
     }
 
     @PostMapping(value = "/loans")
     @ResponseStatus(value = HttpStatus.OK)
-    public void addLoan(){
-
+    public void addLoan(@RequestBody LoanEntity loanEntity) {
+        loanService.createLoan(loanEntity);
     }
+
     @PutMapping(value = "/loans")
     @ResponseStatus(value = HttpStatus.OK)
-    public void editLoan(){
-
+    public void editLoan() {
+        throw new NotYetImplementedException();
     }
+
     @DeleteMapping(value = "/loans")
     @ResponseStatus(value = HttpStatus.OK)
-    public void removeLoan(){
-
+    public void removeLoan(@RequestBody long id) {
+        loanService.deleteLoan(id);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(value = "/loans?lender={lender}&id={id}")
-    public void getLoan(@PathVariable String lender, @PathVariable long id){
+    public void getLoan(@PathVariable String lender, @PathVariable long id) {
         throw new NotYetImplementedException();
     }
 

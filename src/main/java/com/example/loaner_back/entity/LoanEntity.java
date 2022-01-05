@@ -4,11 +4,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.validator.constraints.UniqueElements;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -23,8 +21,11 @@ public class LoanEntity {
     @Id
     Long id;
 
+    @Column(unique=true)
     @NotBlank
     String name;
+
+    @NotBlank
     String description;
 
     @NotBlank
@@ -35,6 +36,8 @@ public class LoanEntity {
     @NotBlank
     BigDecimal sum;
 
-    @OneToOne
+    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
+    @MapsId
     UserEntity loanCreator;
 }
