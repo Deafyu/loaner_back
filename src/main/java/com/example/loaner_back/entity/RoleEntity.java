@@ -3,15 +3,14 @@ package com.example.loaner_back.entity;
 import com.example.loaner_back.utils.UserType;
 import lombok.AccessLevel;
 
+import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
-
+@Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 public class RoleEntity {
@@ -24,4 +23,7 @@ public class RoleEntity {
 
     @NotNull
     UserType userType;
+
+    @ManyToMany
+    List<UserEntity> users;
 }

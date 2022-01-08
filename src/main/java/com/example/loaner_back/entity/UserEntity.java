@@ -11,6 +11,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -22,7 +23,8 @@ public class UserEntity {
 
     @NotBlank
     @Size(min = 6, max = 30)
-    String name;
+    String FirstName;
+    String LastName;
 
     @NotBlank
     String email;
@@ -35,7 +37,7 @@ public class UserEntity {
 
     @OneToOne(mappedBy = "loanCreator")
     private LoanEntity user;
-    
-    @ManyToOne
-    private RoleEntity role;
+
+    @ManyToMany
+    private Set<RoleEntity> roles;
 }

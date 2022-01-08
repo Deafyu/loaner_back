@@ -1,5 +1,8 @@
 package com.example.loaner_back.controllers;
 
+import com.example.loaner_back.dto.UserDto;
+import com.example.loaner_back.entity.UserEntity;
+import com.example.loaner_back.exception.UserAlreadyExistException;
 import com.example.loaner_back.service.UserService;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +24,14 @@ public class HomeController {
         return "login";
     }
 
-    @RequestMapping(value = "/")
+    @GetMapping(value = "/")
     public String home() {
         return "/";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/register")
-    public String showRegisterForm() {
-        return "register";
+    @PostMapping(value = "/register")
+    public void showRegisterForm(UserDto userEntity) throws UserAlreadyExistException {
+        userService.registerNewUserAccount(userEntity);
     }
 
-//    @RequestMapping(method = RequestMethod.POST, value = "/register")
-//    public String registerUser(@RequestBody UserRegisterDto userRegisterDto) {
-//        userService.createUser(userRegisterDto);
-//        return "success";
-//    }
 }
