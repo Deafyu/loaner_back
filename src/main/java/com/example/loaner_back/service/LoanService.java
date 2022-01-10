@@ -42,7 +42,7 @@ public class LoanService {
         return loanRepository
                 .findByLoanCreator
                         (userRepository
-                                .findByName(name)
+                                .findByEmail(name)
                                 .orElseThrow(RuntimeException::new)
                         )
                 .orElseGet(Collections::emptyList);

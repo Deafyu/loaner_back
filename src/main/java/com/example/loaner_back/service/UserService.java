@@ -34,8 +34,8 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public long getSingleUserByNameAndReturnId(String name) {
-        UserEntity user = userRepository.findByName(name).orElseThrow(RuntimeException::new);
+    public long getSingleUserByNameAndReturnId(String email) {
+        UserEntity user = userRepository.findByEmail(email).orElseThrow(RuntimeException::new);
         return user.getId();
     }
 
@@ -69,7 +69,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Optional<UserEntity> getUserByName(String name) {
-        return userRepository.findByName(name);
+    public Optional<UserEntity> getUserByEmail(String name) {
+        return userRepository.findByEmail(name);
     }
 }

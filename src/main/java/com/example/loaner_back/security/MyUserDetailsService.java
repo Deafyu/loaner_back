@@ -29,9 +29,9 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        UserEntity user = userService.getUserByName(name).orElseThrow(
-                () -> new UsernameNotFoundException("User not found: " + name));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntity user = userService.getUserByEmail(email).orElseThrow(
+                () -> new UsernameNotFoundException("User not found: " + email));
         List<GrantedAuthority> authorityList = getUserAuthority(user.getRoles());
         return buildUserForAuthentication(user, authorityList);
     }
