@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
-
+    private UserEntity user;
     private Long id;
 
     private String username;
@@ -33,6 +33,10 @@ public class UserDetailsImpl implements UserDetails {
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+    }
+
+    public UserDetailsImpl(UserEntity user) {
+        this.user=user;
     }
 
     public static UserDetailsImpl build(UserEntity user) {

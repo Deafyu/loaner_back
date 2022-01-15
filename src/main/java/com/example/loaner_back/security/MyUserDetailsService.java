@@ -34,7 +34,7 @@ public class MyUserDetailsService implements UserDetailsService {
         UserEntity user = userRepository.findByEmail(email).orElseThrow(
                 () -> new UsernameNotFoundException("User not found: " + email));
         List<GrantedAuthority> authorityList = getUserAuthority(user.getRoles());
-        return buildUserForAuthentication(user, authorityList);
+        return UserDetailsImpl.build(user);
     }
 
     private List<GrantedAuthority> getUserAuthority(Set<RoleEntity> userRoles) {
