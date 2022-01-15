@@ -1,6 +1,7 @@
 package com.example.loaner_back.controllers;
 
 import com.example.loaner_back.Responses.JwtResponse;
+import com.example.loaner_back.dto.LoginDto;
 import com.example.loaner_back.dto.UserDto;
 import com.example.loaner_back.exception.UserAlreadyExistException;
 import com.example.loaner_back.jwt.JwtUtils;
@@ -34,9 +35,9 @@ public class HomeController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody String email, @RequestBody String login) {
+    public ResponseEntity<JwtResponse> login(@RequestBody LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(email, login));
+                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
