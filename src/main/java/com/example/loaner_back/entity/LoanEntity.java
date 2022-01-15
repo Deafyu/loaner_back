@@ -28,7 +28,7 @@ public class LoanEntity {
     @NotBlank
     String description;
 
-    @NotBlank
+    @NotNull
     @Min(0)
     @Max(30)
     int interestRate;

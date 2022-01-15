@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -17,6 +18,9 @@ public class UserDto {
 
     @NotBlank
     String lastName;
+
+    @NotNull
+    int age;
 
     @NotBlank
     String password;

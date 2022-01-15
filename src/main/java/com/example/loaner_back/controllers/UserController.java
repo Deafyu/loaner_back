@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @FieldDefaults(makeFinal = true)
 @RestController
+@RequestMapping("/loaner")
 public class UserController {
     UserService userService;
 

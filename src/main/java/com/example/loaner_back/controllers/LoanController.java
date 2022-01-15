@@ -6,12 +6,14 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @FieldDefaults(makeFinal = true)
 @RestController
+@RequestMapping("/loaner")
 public class LoanController {
     LoanService loanService;
 

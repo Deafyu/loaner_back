@@ -1,14 +1,15 @@
 package com.example.loaner_back.service;
 
 import com.example.loaner_back.dto.UserDto;
-import com.example.loaner_back.entity.LoanEntity;
 import com.example.loaner_back.entity.UserEntity;
 import com.example.loaner_back.exception.UserAlreadyExistException;
 import com.example.loaner_back.repository.LoanRepository;
+import com.example.loaner_back.repository.RoleRepository;
 import com.example.loaner_back.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +20,12 @@ import java.util.Optional;
 public class UserService {
     LoanRepository loanRepository;
     UserRepository userRepository;
-
+    RoleRepository roleRepository;
     @Autowired
-    public UserService(LoanRepository loanRepository, UserRepository userRepository) {
+    public UserService(LoanRepository loanRepository, UserRepository userRepository, RoleRepository roleRepository) {
         this.loanRepository = loanRepository;
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     public List<UserEntity> getAllUsers() {
@@ -44,7 +46,7 @@ public class UserService {
     }
 
     boolean emailExist(String email) {
-        return userRepository.findByEmail(email) != null;
+        return userRepository.findByEmail(email).isPresent();
     }
 
     public void deleteUserById(long id) {
@@ -58,13 +60,13 @@ public class UserService {
             throw new UserAlreadyExistException("There is an account with that email address: "
                     + userDto.getEmail());
         }
-
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         UserEntity user = new UserEntity();
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         user.setEmail(userDto.getEmail());
-        //   user.setRole("ROLE_USER");
+        user.addRole(roleRepository.findByName("ROLE_USER"));
 
         return userRepository.save(user);
     }

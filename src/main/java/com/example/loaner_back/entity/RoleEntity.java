@@ -1,13 +1,12 @@
 package com.example.loaner_back.entity;
 
-import com.example.loaner_back.utils.UserType;
 import lombok.AccessLevel;
 
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Getter
@@ -19,10 +18,8 @@ public class RoleEntity {
     @Id
     Long id;
 
+    @NotBlank
     String name;
-
-    @NotNull
-    UserType userType;
 
     @ManyToMany
     List<UserEntity> users;

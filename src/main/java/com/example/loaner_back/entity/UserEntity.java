@@ -6,10 +6,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.Set;
 
@@ -19,9 +16,9 @@ import java.util.Set;
 @Entity
 public class UserEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @NotBlank
     @Size(min = 6, max = 30)
     String FirstName;
     String LastName;
@@ -32,7 +29,7 @@ public class UserEntity {
     @NotBlank
     String password;
 
-    @NotBlank
+    @NotNull
     int age;
 
     @OneToOne(mappedBy = "loanCreator")
@@ -40,4 +37,8 @@ public class UserEntity {
 
     @ManyToMany
     private Set<RoleEntity> roles;
+
+    public void addRole(RoleEntity role){
+        roles.add(role);
+    }
 }
