@@ -13,7 +13,6 @@ import java.util.List;
 
 @FieldDefaults(makeFinal = true)
 @RestController
-@RequestMapping("/loaner")
 public class LoanController {
     LoanService loanService;
 
