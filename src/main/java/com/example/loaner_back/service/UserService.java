@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -66,7 +67,8 @@ public class UserService {
         user.setLastName(userDto.getLastName());
         user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         user.setEmail(userDto.getEmail());
-        user.addRole(roleRepository.findByName("USER_ROLE"));
+        System.out.println(roleRepository.findByName("USER_ROLE").getName());
+        user.setRoles(Set.of(roleRepository.findByName("USER_ROLE")));
 
         return userRepository.save(user);
     }

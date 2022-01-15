@@ -34,7 +34,7 @@ public class HomeController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<JwtResponse> login(String email, String login) {
+    public ResponseEntity<JwtResponse> login(@RequestBody String email, @RequestBody String login) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(email, login));
 
@@ -59,7 +59,7 @@ public class HomeController {
     }
 
     @PostMapping(value = "/register")
-    public void showRegisterForm(UserDto userEntity) throws UserAlreadyExistException {
+    public void showRegisterForm(@RequestBody UserDto userEntity) throws UserAlreadyExistException {
         userService.registerNewUserAccount(userEntity);
     }
 
