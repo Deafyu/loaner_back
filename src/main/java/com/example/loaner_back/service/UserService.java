@@ -66,7 +66,7 @@ public class UserService {
         user.setLastName(userDto.getLastName());
         user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         user.setEmail(userDto.getEmail());
-        user.addRole(roleRepository.findByName("ROLE_USER"));
+        user.addRole(roleRepository.findByName("USER_ROLE"));
 
         return userRepository.save(user);
     }

@@ -19,8 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.sql.DataSource;
 
 @EnableGlobalMethodSecurity(
-         securedEnabled = true,
-         jsr250Enabled = true,
+        securedEnabled = true,
+        jsr250Enabled = true,
         prePostEnabled = true)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @Configuration
@@ -57,15 +57,21 @@ class LoanerSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http.cors().and().csrf().disable().authorizeRequests()
+//                .antMatchers("/login", "/", "/register")
+//                .permitAll()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .formLogin()
+//                .loginPage("/login");
+
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/login", "/", "/register")
-                .permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login");
+                .authorizeRequests().antMatchers("/login","/","/register").permitAll()
+                .antMatchers("/**").permitAll()
+                .anyRequest().authenticated();
 
     }
 
