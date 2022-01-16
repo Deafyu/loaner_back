@@ -21,6 +21,6 @@ public class RoleEntity {
     @NotBlank
     String name;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     List<UserEntity> users;
 }

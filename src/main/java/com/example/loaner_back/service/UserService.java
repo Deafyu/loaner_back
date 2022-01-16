@@ -68,8 +68,8 @@ public class UserService {
         user.setAge(userDto.getAge());
         user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         user.setEmail(userDto.getEmail());
-        System.out.println(roleRepository.findByName("USER_ROLE").getName());
-        user.setRoles(Set.of(roleRepository.findByName("USER_ROLE")));
+        System.out.println(roleRepository.findByName("ROLE_USER").getName());
+        user.setRoles(Set.of(roleRepository.findByName("ROLE_USER")));
 
         return userRepository.save(user);
     }
