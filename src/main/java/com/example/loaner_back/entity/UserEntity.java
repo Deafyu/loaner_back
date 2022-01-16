@@ -35,7 +35,7 @@ public class UserEntity {
     @OneToOne(mappedBy = "loanCreator")
     private LoanEntity user;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<RoleEntity> roles;
 
     public void addRole(RoleEntity role){
