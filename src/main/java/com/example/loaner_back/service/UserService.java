@@ -65,6 +65,7 @@ public class UserService {
         UserEntity user = new UserEntity();
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
+        user.setAge(userDto.getAge());
         user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         user.setEmail(userDto.getEmail());
         System.out.println(roleRepository.findByName("USER_ROLE").getName());
