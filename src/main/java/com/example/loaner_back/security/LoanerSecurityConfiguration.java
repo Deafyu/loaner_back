@@ -1,6 +1,7 @@
 package com.example.loaner_back.security;
 
 import com.example.loaner_back.jwt.AuthEntryPointJwt;
+import com.example.loaner_back.jwt.AuthTokenFilter;
 import com.example.loaner_back.repository.RoleRepository;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -15,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.sql.DataSource;
 
@@ -28,14 +30,12 @@ class LoanerSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     DataSource dataSource;
     MyUserDetailsService userDetailsService;
-    RoleRepository roleRepository;
     AuthEntryPointJwt unauthorizedHandler;
 
     @Autowired
     public LoanerSecurityConfiguration(DataSource dataSource, MyUserDetailsService userDetailsService, RoleRepository roleRepository, AuthEntryPointJwt unauthorizedHandler) {
         this.dataSource = dataSource;
         this.userDetailsService = userDetailsService;
-        this.roleRepository = roleRepository;
         this.unauthorizedHandler = unauthorizedHandler;
     }
 
@@ -43,6 +43,11 @@ class LoanerSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter();
     }
 
     @Bean
@@ -69,10 +74,10 @@ class LoanerSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/login","/","/register").permitAll()
+                .authorizeRequests().antMatchers("/login", "/", "/register").permitAll()
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated();
-
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
 }
