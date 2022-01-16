@@ -19,7 +19,7 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Size(min = 6, max = 30)
+    @Size(min = 2, max = 30)
     String FirstName;
     String LastName;
 

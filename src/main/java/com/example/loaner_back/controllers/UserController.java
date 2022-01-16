@@ -21,18 +21,18 @@ public class UserController {
     }
 
     @GetMapping(value = "/users")
-    @PreAuthorize("hasRole('ADMIN_ROLE')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UserEntity> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/users/id={userId}")
-    @PreAuthorize("hasRole('ADMIN_ROLE') or hasRole('USER_ROLE')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public Optional<UserEntity> getUser(@PathVariable long userId) {
         return userService.getSingleUserById(userId);
     }
 
-    @PreAuthorize("hasRole('ADMIN_ROLE') or hasRole('USER_ROLE')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @DeleteMapping(value = "/users/id={userId}")
     public void deleteUser(@PathVariable long userId) {
         userService.deleteUserById(userId);

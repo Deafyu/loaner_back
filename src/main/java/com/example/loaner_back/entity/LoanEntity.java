@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 @Entity
 public class LoanEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Column(unique=true)
