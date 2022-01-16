@@ -65,11 +65,6 @@ public class LoanController {
         loanService.deleteLoan(id);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('LENDER')")
-    @ResponseStatus(value = HttpStatus.OK)
-    @PostMapping(value = "/loans")
-    public void addLoan(@RequestBody LoanEntity loan, @PathVariable long id) {
-        throw new NotYetImplementedException();
-    }
+
 
 }
