@@ -39,9 +39,9 @@ public class LoanLenderController {
     }
 
     @PreAuthorize("hasRole('LENDER')")
-    @DeleteMapping(value = "/loans")
+    @DeleteMapping(value = "/loans/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public void removeLoan(@RequestBody long id) {
+    public void removeLoan(@PathVariable long id) {
         loanService.deleteLoan(id);
     }
 
