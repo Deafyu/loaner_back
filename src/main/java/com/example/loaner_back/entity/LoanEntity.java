@@ -1,5 +1,7 @@
 package com.example.loaner_back.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @Setter
 @Getter
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 public class LoanEntity {

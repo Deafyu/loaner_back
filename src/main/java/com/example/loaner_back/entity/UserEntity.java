@@ -35,6 +35,11 @@ public class UserEntity {
     @OneToOne(mappedBy = "loanCreator")
     private LoanEntity loanEntity;
 
+//    @JoinTable(
+//            name = "role_entity",
+//            joinColumns = @JoinColumn(name = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "id")
+//    )
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<RoleEntity> roles;
 
