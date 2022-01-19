@@ -21,10 +21,10 @@ public class ApplicationEntity {
 
     String description;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     UserEntity applicationCreator;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     UserEntity applicationReceiver;
 
     @Lob

@@ -32,7 +32,7 @@ public class UserEntity {
     @NotNull
     int age;
 
-    @OneToOne(mappedBy = "loanCreator")
+    @OneToOne(mappedBy = "loanCreator", fetch = FetchType.EAGER)
     private LoanEntity loanEntity;
 
     @ManyToMany(fetch = FetchType.EAGER)
