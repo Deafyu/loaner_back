@@ -41,6 +41,9 @@ public class UserService {
         UserEntity user = userRepository.findByEmail(email).orElseThrow(RuntimeException::new);
         return user.getId();
     }
+    public Optional<List<UserEntity>> getUsersByRole(String roleName) {
+        return userRepository.findByRoles(roleRepository.findByName(roleName));
+    }
 
     public void createUser(UserEntity UserEntity) {
         userRepository.save(UserEntity);

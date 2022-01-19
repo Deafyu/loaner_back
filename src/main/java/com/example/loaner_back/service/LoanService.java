@@ -7,6 +7,7 @@ import com.example.loaner_back.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -48,13 +49,22 @@ public class LoanService {
                 .orElseGet(Collections::emptyList);
     }
 
-    public void createLoan(LoanEntity LoanEntity) {
-        loanRepository.save(LoanEntity);
+    public void createLoan(LoanEntity loanEntity) {
+        loanRepository.save(loanEntity);
+    }
+
+    public Optional<List<LoanEntity>> getUserLoans(UserEntity receiver){
+        return loanRepository.findByLoanReceivers(receiver);
     }
 
     public void deleteLoan(long id) {
         if (loanRepository.existsById(id)) {
             loanRepository.deleteById(id);
         }
+    }
+    public void editLoan(long id, LoanEntity loanEntity){
+        LoanEntity oldLoanEntity = loanRepository.findById(id).orElseThrow(RuntimeException::new);
+        oldLoanEntity = loanEntity;
+        loanRepository.save(oldLoanEntity);
     }
 }

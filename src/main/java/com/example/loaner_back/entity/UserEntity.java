@@ -33,7 +33,7 @@ public class UserEntity {
     int age;
 
     @OneToOne(mappedBy = "loanCreator")
-    private LoanEntity user;
+    private LoanEntity loanEntity;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<RoleEntity> roles;

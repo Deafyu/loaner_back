@@ -12,6 +12,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Setter
 @Getter
@@ -41,4 +42,8 @@ public class LoanEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     UserEntity loanCreator;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @MapsId
+    List<UserEntity> loanReceivers;
 }
