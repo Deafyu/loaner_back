@@ -39,7 +39,6 @@ public class LoanEntity {
     @Max(30)
     int interestRate;
 
-    @NotBlank
     BigDecimal sum;
 
     @NotNull
