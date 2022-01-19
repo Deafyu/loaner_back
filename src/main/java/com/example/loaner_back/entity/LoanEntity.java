@@ -39,10 +39,10 @@ public class LoanEntity {
     BigDecimal sum;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     UserEntity loanCreator;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL)
     List<UserEntity> loanReceivers;
 }
