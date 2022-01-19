@@ -1,5 +1,6 @@
 package com.example.loaner_back.service;
 
+import com.example.loaner_back.dto.LoanDto;
 import com.example.loaner_back.entity.LoanEntity;
 import com.example.loaner_back.entity.UserEntity;
 import com.example.loaner_back.repository.LoanRepository;
@@ -49,8 +50,14 @@ public class LoanService {
                 .orElseGet(Collections::emptyList);
     }
 
-    public void createLoan(LoanEntity loanEntity) {
-        loanRepository.save(loanEntity);
+    public void createLoan(LoanDto loanEntity) {
+        LoanEntity newLoanEntity = new LoanEntity();
+        newLoanEntity.setLoanCreator(userRepository.findByEmail(loanEntity.getCreatorLogin()).orElseThrow());
+        newLoanEntity.setInterestRate(loanEntity.getInterestRate());
+        newLoanEntity.setSum(loanEntity.getSum());
+        newLoanEntity.setName(loanEntity.getName());
+        newLoanEntity.setDescription(loanEntity.getDescription());
+        loanRepository.save(newLoanEntity);
     }
 
     public Optional<List<LoanEntity>> getUserLoans(UserEntity receiver){

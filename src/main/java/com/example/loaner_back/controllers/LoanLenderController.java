@@ -1,5 +1,6 @@
 package com.example.loaner_back.controllers;
 
+import com.example.loaner_back.dto.LoanDto;
 import com.example.loaner_back.entity.LoanEntity;
 import com.example.loaner_back.service.LoanService;
 import lombok.experimental.FieldDefaults;
@@ -26,7 +27,7 @@ public class LoanLenderController {
     @PreAuthorize("hasRole('LENDER')")
     @PostMapping(value = "/loans")
     @ResponseStatus(value = HttpStatus.OK)
-    public void addLoan(@RequestBody LoanEntity loanEntity) {
+    public void addLoan(@RequestBody LoanDto loanEntity) {
         loanService.createLoan(loanEntity);
     }
 
