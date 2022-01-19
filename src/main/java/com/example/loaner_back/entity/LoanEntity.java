@@ -44,6 +44,5 @@ public class LoanEntity {
     UserEntity loanCreator;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @MapsId
     List<UserEntity> loanReceivers;
 }

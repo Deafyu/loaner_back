@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    @DeleteMapping(value = "/lenders")
+    @GetMapping(value = "/lenders")
     public List<UserEntity> getAllLenders(@RequestBody String name) {
         return userService.getUsersByRole(name).orElse(null);
     }
