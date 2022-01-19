@@ -22,6 +22,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 public class LoanEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -43,7 +44,6 @@ public class LoanEntity {
 
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)
-    @MapsId
     UserEntity loanCreator;
 
     @ManyToMany(cascade = CascadeType.ALL)
