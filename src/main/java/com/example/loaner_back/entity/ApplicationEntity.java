@@ -1,11 +1,13 @@
 package com.example.loaner_back.entity;
 
+import com.example.loaner_back.utils.Type;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
@@ -20,6 +22,11 @@ public class ApplicationEntity {
     String name;
 
     String description;
+
+    boolean isAccepted;
+
+    @NotNull
+    Type type;
 
     @OneToOne
     UserEntity applicationCreator;

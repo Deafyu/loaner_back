@@ -37,16 +37,13 @@ public class LoanUserController {
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    @GetMapping(value = "/loans?lender={lender}&id={id}")
-    public ResponseEntity<LoanEntity> getLoanDetails(@PathVariable String lender, @PathVariable long id) {
+    @GetMapping(value = "/loans&id={id}")
+    public ResponseEntity<LoanEntity> getLoanDetails(@PathVariable long id) {
         try {
             return ResponseEntity.ok(loanService.getSingleLoanById(id).orElseThrow(RuntimeException::new));
         } catch (Exception ex) {
             return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
         }
     }
-
-
-
 
 }

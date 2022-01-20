@@ -1,4 +1,4 @@
-package com.example.loaner_back.dto;
+package com.example.loaner_back.dto.Application;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ApplicationDto {
+public class LoanApplicationDto {
     String name;
     String description;
     String loanName;
