@@ -30,15 +30,15 @@ public class LoanUserController {
         return loanService.getAllLoans();
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('LENDER')")
-    @GetMapping(value = "/loans?lender={lender}")
-    public List<LoanEntity> getAllLoansFromLender(@PathVariable String lender) {
+    @PreAuthorize("hasRole('LENDER') or hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping(value = "/loans/loan")
+    public List<LoanEntity> getAllLoansFromLender(@RequestParam String lender) {
         return loanService.getAllLoansFromLender(lender);
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    @GetMapping(value = "/loans&id={id}")
-    public ResponseEntity<LoanEntity> getLoanDetails(@PathVariable long id) {
+    @GetMapping(value = "/loans/loan/details")
+    public ResponseEntity<LoanEntity> getLoanDetails(@RequestParam long id) {
         try {
             return ResponseEntity.ok(loanService.getSingleLoanById(id).orElseThrow(RuntimeException::new));
         } catch (Exception ex) {

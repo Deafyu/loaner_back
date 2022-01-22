@@ -41,6 +41,12 @@ public class LoanService {
     }
 
     public List<LoanEntity> getAllLoansFromLender(String name) {
+        System.out.println(loanRepository
+                .findByLoanCreator
+                        (userRepository
+                                .findByEmail(name)
+                                .orElseThrow(RuntimeException::new)
+                        ));
         return loanRepository
                 .findByLoanCreator
                         (userRepository
