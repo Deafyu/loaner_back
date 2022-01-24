@@ -1,5 +1,6 @@
 package com.example.loaner_back.service;
 
+import com.example.loaner_back.dto.Application.ApplicationAnswerDto;
 import com.example.loaner_back.dto.Application.LenderApplicationDto;
 import com.example.loaner_back.dto.Application.LoanApplicationDto;
 import com.example.loaner_back.entity.ApplicationEntity;
@@ -44,6 +45,7 @@ public class ApplicationService {
         applicationEntity.setName(loanApplicationDto.getName());
         applicationRepository.save(applicationEntity);
     }
+
     public void createNewLenderApplication(LenderApplicationDto lenderApplicationDto) {
         ApplicationEntity applicationEntity = new ApplicationEntity();
         applicationEntity.setApplicationCreator(userRepository
@@ -56,11 +58,18 @@ public class ApplicationService {
         applicationRepository.save(applicationEntity);
     }
 
-    public ApplicationEntity getApplicationEntity(long id){
+    public ApplicationEntity getApplicationEntity(long id) {
         return applicationRepository.getById(id);
     }
 
-    public List<ApplicationEntity> getAllApplicationEntities(Type type){
+    public List<ApplicationEntity> getAllApplicationEntities(Type type) {
         return applicationRepository.findAllByType(type);
+    }
+
+    public String answerApplication(ApplicationAnswerDto dto) {
+        ApplicationEntity applicationEntity = applicationRepository.findById(dto.getApplicationId()).orElseThrow();
+
+        applicationEntity.setAccepted(dto.isAccepted());
+        return dto.getMessage();
     }
 }

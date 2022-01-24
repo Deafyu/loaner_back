@@ -1,5 +1,6 @@
 package com.example.loaner_back.controllers;
 
+import com.example.loaner_back.dto.Application.ApplicationAnswerDto;
 import com.example.loaner_back.dto.Application.LenderApplicationDto;
 import com.example.loaner_back.dto.Application.LoanApplicationDto;
 import com.example.loaner_back.entity.ApplicationEntity;
@@ -39,13 +40,13 @@ public class ApplicationController {
         applicationService.createNewLoanApplication(loanApplicationDto);
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') ")
     @GetMapping("/lenders/{id}")
     public ApplicationEntity getLenderApplication(@PathVariable long id) {
         return applicationService.getApplicationEntity(id);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')or hasRole('LENDER')")
     @GetMapping("/loans/{id}")
     public ApplicationEntity getLoanApplication(@PathVariable long id) {
         return applicationService.getApplicationEntity(id);
@@ -61,5 +62,17 @@ public class ApplicationController {
     @GetMapping("/lenders")
     public List<ApplicationEntity> getAllLenderApplications() {
         return applicationService.getAllApplicationEntities(Type.LENDER);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/lenders/{id}")
+    public String answerLenderApplication(@RequestBody ApplicationAnswerDto applicationAnswerDto, @PathVariable Long id) {
+        return applicationService.answerApplication(applicationAnswerDto);
+    }
+
+    @PreAuthorize("hasRole('LENDER')")
+    @PostMapping("/loans/{id}")
+    public String answerLoanApplication(@RequestBody ApplicationAnswerDto applicationAnswerDto, @PathVariable Long id) {
+        return applicationService.answerApplication(applicationAnswerDto);
     }
 }
