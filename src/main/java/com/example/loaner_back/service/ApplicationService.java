@@ -67,7 +67,7 @@ public class ApplicationService {
     }
 
     public String answerApplication(ApplicationAnswerDto dto) {
-        ApplicationEntity applicationEntity = applicationRepository.findById(dto.getApplicationId()).orElseThrow();
+        ApplicationEntity applicationEntity = applicationRepository.findById(dto.getApplicationId()).orElseThrow(NullPointerException::new);
 
         applicationEntity.setAccepted(dto.isAccepted());
         return dto.getMessage();
