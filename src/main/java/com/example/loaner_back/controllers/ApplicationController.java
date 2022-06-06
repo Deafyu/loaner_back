@@ -93,12 +93,13 @@ public class ApplicationController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/lenders/{id}")
     public ResponseEntity<String> answerLenderApplication(@RequestBody ApplicationAnswerDto applicationAnswerDto, @PathVariable Long id) {
-        try {
-            return new ResponseEntity(applicationService.answerApplication(applicationAnswerDto), HttpStatus.OK);
-        } catch (Exception ex) {
-            System.out.println(ex);
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity(applicationService.answerApplication(applicationAnswerDto), HttpStatus.OK);
+//        try {
+//            System.out.println("a");
+//        } catch (Exception ex) {
+//            System.out.println(ex);
+//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+//        }
     }
 
     @PreAuthorize("hasRole('LENDER')")
