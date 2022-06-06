@@ -2,14 +2,12 @@ package com.example.loaner_back.controllers;
 
 import com.example.loaner_back.entity.LoanEntity;
 import com.example.loaner_back.service.LoanService;
-import com.example.loaner_back.threads.LoanThread;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +29,8 @@ public class LoanUserController {
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping(value = "/loans")
-    public List<LoanEntity> getAllLoans() throws InterruptedException, ExecutionException {
-        ExecutorService service = Executors.newFixedThreadPool(1);
-        List<LoanThread> callableList = new ArrayList<>();
-        callableList.add(new LoanThread(loanService));
-        List<Future<List<LoanEntity>>> list = service.invokeAll(callableList);
-
-        return list.get(0).get();
+    public List<LoanEntity> getAllLoans()  {
+        return loanService.getAllLoans();
     }
 
     @PreAuthorize("hasRole('LENDER') or hasRole('USER') or hasRole('ADMIN')")
