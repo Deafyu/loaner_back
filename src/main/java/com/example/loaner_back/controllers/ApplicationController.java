@@ -96,6 +96,7 @@ public class ApplicationController {
         try {
             return new ResponseEntity(applicationService.answerApplication(applicationAnswerDto), HttpStatus.OK);
         } catch (Exception ex) {
+            System.out.println(ex);
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
