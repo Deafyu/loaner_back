@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 public class LoanApplicationDto {
     String name;
     String description;
-    String loanName;
-    String userEmail;
+    int loanId;
+    String senderEmail;
+    String receiverEmail;
 }
