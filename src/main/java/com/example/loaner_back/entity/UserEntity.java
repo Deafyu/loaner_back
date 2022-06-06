@@ -39,9 +39,6 @@ public class UserEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     Set<RoleEntity> roles;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    List<UserEntity> friendsIdList;
-
     public UserEntity() {
     }
 

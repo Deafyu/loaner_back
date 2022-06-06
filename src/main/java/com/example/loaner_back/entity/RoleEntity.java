@@ -22,5 +22,6 @@ public class RoleEntity {
     String name;
 
     @ManyToMany(fetch = FetchType.EAGER)
+//    @ManyToMany
     List<UserEntity> users;
 }

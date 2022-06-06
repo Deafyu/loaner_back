@@ -46,6 +46,6 @@ public class LoanEntity {
     @OneToOne(cascade = CascadeType.ALL)
     UserEntity loanCreator;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL)
     List<UserEntity> loanReceivers;
 }

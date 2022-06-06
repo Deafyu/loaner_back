@@ -23,14 +23,14 @@ public class ApplicationService {
     ApplicationRepository applicationRepository;
     LoanRepository loanRepository;
     UserRepository userRepository;
-    RoleRepository roleRepository;
+//    RoleRepository roleRepository;
 
     @Autowired
     public ApplicationService(ApplicationRepository applicationRepository, LoanRepository loanRepository, UserRepository userRepository, RoleRepository roleRepository) {
         this.applicationRepository = applicationRepository;
         this.loanRepository = loanRepository;
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+//        this.roleRepository = roleRepository;
     }
 
     public void createNewLoanApplication(LoanApplicationDto loanApplicationDto) {
@@ -73,9 +73,9 @@ public class ApplicationService {
     public String answerApplication(ApplicationAnswerDto dto) {
         ApplicationEntity applicationEntity = applicationRepository.findById(dto.getApplicationId()).orElseThrow(NullPointerException::new);
         applicationEntity.setAccepted(dto.isAccepted());
-        var user = userRepository.findById(applicationEntity.getApplicationCreator().getId()).get();
-        user.setRoles(Set.of(roleRepository.findByName("ROLE_LENDER")));
-        userRepository.save(user);
+//        var user = userRepository.findById(applicationEntity.getApplicationCreator().getId()).get();
+//        user.setRoles(Set.of(roleRepository.findByName("ROLE_LENDER")));
+//        userRepository.save(user);
         return dto.getMessage();
     }
 }
