@@ -19,7 +19,6 @@ import java.util.List;
 
 @FieldDefaults(makeFinal = true)
 @RestController
-@Transactional
 @RequestMapping("/application")
 public class ApplicationController {
     ApplicationService applicationService;
