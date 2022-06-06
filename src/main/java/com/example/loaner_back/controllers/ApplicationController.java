@@ -9,6 +9,7 @@ import com.example.loaner_back.utils.Type;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -30,49 +31,83 @@ public class ApplicationController {
 
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/lenders")
-    public void sendLenderApplication(@RequestBody LenderApplicationDto lenderApplicationDto) {
-        applicationService.createNewLenderApplication(lenderApplicationDto);
+    public ResponseEntity<String> sendLenderApplication(@RequestBody LenderApplicationDto lenderApplicationDto) {
+        try {
+            applicationService.createNewLenderApplication(lenderApplicationDto);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/loans")
-    public void sendLoanApplication(@RequestBody LoanApplicationDto loanApplicationDto) {
-        applicationService.createNewLoanApplication(loanApplicationDto);
+    public ResponseEntity<String> sendLoanApplication(@RequestBody LoanApplicationDto loanApplicationDto) {
+        try {
+            applicationService.createNewLoanApplication(loanApplicationDto);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PreAuthorize("hasRole('USER') ")
     @GetMapping("/lenders/{id}")
-    public ApplicationEntity getLenderApplication(@PathVariable long id) {
-        return applicationService.getApplicationEntity(id);
+    public ResponseEntity<ApplicationEntity> getLenderApplication(@PathVariable long id) {
+        try {
+            return new ResponseEntity(applicationService.getApplicationEntity(id), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')or hasRole('LENDER')")
     @GetMapping("/loans/{id}")
-    public ApplicationEntity getLoanApplication(@PathVariable long id) {
-        return applicationService.getApplicationEntity(id);
+    public ResponseEntity<ApplicationEntity> getLoanApplication(@PathVariable long id) {
+        try {
+            return new ResponseEntity(applicationService.getApplicationEntity(id), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/loans")
-    public List<ApplicationEntity> getAllLoansApplications() {
-        return applicationService.getAllApplicationEntities(Type.LOAN);
+    public ResponseEntity<List<ApplicationEntity>> getAllLoansApplications() {
+        try {
+            return new ResponseEntity(applicationService.getAllApplicationEntities(Type.LOAN), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/lenders")
-    public List<ApplicationEntity> getAllLenderApplications() {
-        return applicationService.getAllApplicationEntities(Type.LENDER);
+    public ResponseEntity<List<ApplicationEntity>> getAllLenderApplications() {
+        try {
+            return new ResponseEntity(applicationService.getAllApplicationEntities(Type.LENDER), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/lenders/{id}")
-    public String answerLenderApplication(@RequestBody ApplicationAnswerDto applicationAnswerDto, @PathVariable Long id) {
-        return applicationService.answerApplication(applicationAnswerDto);
+    public ResponseEntity<String> answerLenderApplication(@RequestBody ApplicationAnswerDto applicationAnswerDto, @PathVariable Long id) {
+        try {
+            return new ResponseEntity(applicationService.answerApplication(applicationAnswerDto), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PreAuthorize("hasRole('LENDER')")
     @PostMapping("/loans/{id}")
-    public String answerLoanApplication(@RequestBody ApplicationAnswerDto applicationAnswerDto, @PathVariable Long id) {
-        return applicationService.answerApplication(applicationAnswerDto);
+    public ResponseEntity<String> answerLoanApplication(@RequestBody ApplicationAnswerDto applicationAnswerDto, @PathVariable Long id) {
+        try {
+            return new ResponseEntity(applicationService.answerApplication(applicationAnswerDto), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 }

@@ -22,6 +22,7 @@ public class UserService {
     LoanRepository loanRepository;
     UserRepository userRepository;
     RoleRepository roleRepository;
+
     @Autowired
     public UserService(LoanRepository loanRepository, UserRepository userRepository, RoleRepository roleRepository) {
         this.loanRepository = loanRepository;
@@ -37,10 +38,11 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public long getSingleUserByNameAndReturnId(String email) {
+    public long getSingleUserByEmailAndReturnId(String email) {
         UserEntity user = userRepository.findByEmail(email).orElseThrow(RuntimeException::new);
         return user.getId();
     }
+
     public Optional<List<UserEntity>> getUsersByRole(String roleName) {
         return userRepository.findByRoles(roleRepository.findByName(roleName));
     }
@@ -53,7 +55,7 @@ public class UserService {
         return userRepository.findByEmail(email).isPresent();
     }
 
-    public void deleteUserById(long id) {
+    public void     deleteUserById(long id) {
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
         }
@@ -65,14 +67,19 @@ public class UserService {
                     + userDto.getEmail());
         }
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        UserEntity user = new UserEntity();
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setAge(userDto.getAge());
-        user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
-        user.setEmail(userDto.getEmail());
-        System.out.println(roleRepository.findByName("ROLE_USER").getName());
-        user.setRoles(Set.of(roleRepository.findByName("ROLE_USER")));
+        UserEntity user = new UserEntity(userDto.getFirstName(),
+                userDto.getLastName(),
+                userDto.getEmail(),
+                bCryptPasswordEncoder.encode(userDto.getPassword()),
+                userDto.getAge(),
+                Set.of(roleRepository.findByName("ROLE_USER")));
+//        user.setFirstName(userDto.getFirstName());
+//        user.setLastName(userDto.getLastName());
+//        user.setAge(userDto.getAge());
+//        user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+//        user.setEmail(userDto.getEmail());
+//        System.out.println(roleRepository.findByName("ROLE_USER").getName());
+//        user.setRoles(Set.of(roleRepository.findByName("ROLE_USER")));
 
         return userRepository.save(user);
     }

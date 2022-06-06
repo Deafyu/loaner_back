@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +28,13 @@ public class LoanLenderController {
     @PreAuthorize("hasRole('LENDER')")
     @PostMapping(value = "/loans")
     @ResponseStatus(value = HttpStatus.OK)
-    public void addLoan(@RequestBody LoanDto loanEntity) {
-        loanService.createLoan(loanEntity);
+    public ResponseEntity addLoan(@RequestBody LoanDto loanEntity) {
+        try {
+            loanService.createLoan(loanEntity);
+            return new ResponseEntity(HttpStatus.CREATED);
+        } catch (Exception ex) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PreAuthorize("hasRole('LENDER')")
@@ -41,9 +47,12 @@ public class LoanLenderController {
     @PreAuthorize("hasRole('LENDER')")
     @DeleteMapping(value = "/loans/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public void removeLoan(@PathVariable long id) {
-        loanService.deleteLoan(id);
+    public ResponseEntity removeLoan(@PathVariable long id) {
+        try {
+            loanService.deleteLoan(id);
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-
-
 }

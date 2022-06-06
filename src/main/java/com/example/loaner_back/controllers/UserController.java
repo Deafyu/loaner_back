@@ -4,6 +4,7 @@ import com.example.loaner_back.entity.UserEntity;
 import com.example.loaner_back.service.UserService;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -37,13 +38,22 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @DeleteMapping(value = "/users/id={userId}")
-    public void deleteUser(@PathVariable long userId) {
-        userService.deleteUserById(userId);
+    public ResponseEntity deleteUser(@PathVariable long userId) {
+        try {
+            userService.deleteUserById(userId);
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @GetMapping(value = "/lenders")
-    public List<UserEntity> getAllLenders(@RequestBody String name) {
-        return userService.getUsersByRole(name).orElse(null);
+    public ResponseEntity<List<UserEntity>> getAllLenders(@RequestBody String name) {
+        try {
+            return new ResponseEntity(userService.getUsersByRole(name).orElse(null), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

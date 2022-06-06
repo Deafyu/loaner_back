@@ -6,6 +6,7 @@ import com.example.loaner_back.dto.Application.LoanApplicationDto;
 import com.example.loaner_back.entity.ApplicationEntity;
 import com.example.loaner_back.repository.ApplicationRepository;
 import com.example.loaner_back.repository.LoanRepository;
+import com.example.loaner_back.repository.RoleRepository;
 import com.example.loaner_back.repository.UserRepository;
 import com.example.loaner_back.utils.Type;
 import lombok.AccessLevel;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -21,12 +23,14 @@ public class ApplicationService {
     ApplicationRepository applicationRepository;
     LoanRepository loanRepository;
     UserRepository userRepository;
+    RoleRepository roleRepository;
 
     @Autowired
-    public ApplicationService(ApplicationRepository applicationRepository, LoanRepository loanRepository, UserRepository userRepository) {
+    public ApplicationService(ApplicationRepository applicationRepository, LoanRepository loanRepository, UserRepository userRepository, RoleRepository roleRepository) {
         this.applicationRepository = applicationRepository;
         this.loanRepository = loanRepository;
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     public void createNewLoanApplication(LoanApplicationDto loanApplicationDto) {
@@ -68,8 +72,10 @@ public class ApplicationService {
 
     public String answerApplication(ApplicationAnswerDto dto) {
         ApplicationEntity applicationEntity = applicationRepository.findById(dto.getApplicationId()).orElseThrow(NullPointerException::new);
-
         applicationEntity.setAccepted(dto.isAccepted());
+        var user = userRepository.findById(applicationEntity.getApplicationCreator().getId()).get();
+        user.setRoles(Set.of(roleRepository.findByName("ROLE_LENDER")));
+        userRepository.save(user);
         return dto.getMessage();
     }
 }

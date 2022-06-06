@@ -7,7 +7,8 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -33,17 +34,27 @@ public class UserEntity {
     int age;
 
     @OneToOne(mappedBy = "loanCreator")
-    private LoanEntity loanEntity;
+    LoanEntity loanEntity;
 
-//    @JoinTable(
-//            name = "role_entity",
-//            joinColumns = @JoinColumn(name = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "id")
-//    )
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<RoleEntity> roles;
+    Set<RoleEntity> roles;
 
-    public void addRole(RoleEntity role){
+    @ManyToMany(fetch = FetchType.EAGER)
+    List<UserEntity> friendsIdList;
+
+    public UserEntity() {
+    }
+
+    public UserEntity(@Size(min = 2, max = 30) String firstName, String lastName, @NotBlank String email, @NotBlank String password, @NotNull int age, Set<RoleEntity> roles) {
+        FirstName = firstName;
+        LastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.age = age;
+        this.roles = roles;
+    }
+
+    public void addRole(RoleEntity role) {
         roles.add(role);
     }
 }

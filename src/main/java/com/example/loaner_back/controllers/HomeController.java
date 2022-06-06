@@ -30,6 +30,7 @@ public class HomeController {
     UserService userService;
     AuthenticationManager authenticationManager;
     JwtUtils jwtUtils;
+
     @Autowired
     public HomeController(UserService userService, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
         this.userService = userService;
@@ -39,7 +40,7 @@ public class HomeController {
 
     @PostMapping(value = "/login")
     public ResponseEntity<JwtResponse> login(@RequestBody LoginDto loginDto) {
-        try{
+        try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
 
@@ -56,19 +57,19 @@ public class HomeController {
                     userDetails.getUsername(),
                     userDetails.getEmail(),
                     roles));
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return new ResponseEntity(null, HttpStatus.UNAUTHORIZED);
         }
     }
 
-    @GetMapping(value = "/")
-    public String home() {
-        return "/";
-    }
-
     @PostMapping(value = "/register")
-    public void showRegisterForm(@RequestBody UserDto userEntity) throws UserAlreadyExistException {
-        userService.registerNewUserAccount(userEntity);
+    public ResponseEntity showRegisterForm(@RequestBody UserDto userEntity) throws UserAlreadyExistException {
+        try {
+            userService.registerNewUserAccount(userEntity);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
