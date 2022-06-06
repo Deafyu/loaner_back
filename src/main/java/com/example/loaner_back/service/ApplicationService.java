@@ -4,6 +4,7 @@ import com.example.loaner_back.dto.Application.ApplicationAnswerDto;
 import com.example.loaner_back.dto.Application.LenderApplicationDto;
 import com.example.loaner_back.dto.Application.LoanApplicationDto;
 import com.example.loaner_back.entity.ApplicationEntity;
+import com.example.loaner_back.entity.UserEntity;
 import com.example.loaner_back.repository.ApplicationRepository;
 import com.example.loaner_back.repository.LoanRepository;
 import com.example.loaner_back.repository.RoleRepository;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -73,7 +75,7 @@ public class ApplicationService {
     public String answerApplication(ApplicationAnswerDto dto) {
         ApplicationEntity applicationEntity = applicationRepository.findById(dto.getApplicationId()).orElseThrow(NullPointerException::new);
         applicationEntity.setAccepted(dto.isAccepted());
-        var user = userRepository.findById(applicationEntity.getApplicationCreator().getId()).get();
+        UserEntity user = userRepository.findById(applicationEntity.getApplicationCreator().getId()).orElseThrow(NullPointerException::new);
         user.setRoles(Set.of(roleRepository.findByName("ROLE_LENDER")));
         userRepository.save(user);
         return dto.getMessage();
