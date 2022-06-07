@@ -70,7 +70,7 @@ public class ApplicationController {
         }
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('LENDER') or hasRole('ADMIN')")
     @GetMapping("/loans")
     public ResponseEntity<List<ApplicationEntity>> getAllLoansApplications() {
         try {
@@ -90,7 +90,7 @@ public class ApplicationController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/lenders/{id}")
     public ResponseEntity<String> answerLenderApplication(@RequestBody ApplicationAnswerDto applicationAnswerDto, @PathVariable Long id) {
         return new ResponseEntity(applicationService.answerApplication(applicationAnswerDto), HttpStatus.OK);

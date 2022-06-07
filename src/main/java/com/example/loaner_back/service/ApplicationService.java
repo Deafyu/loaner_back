@@ -77,6 +77,7 @@ public class ApplicationService {
         applicationEntity.setAccepted(dto.isAccepted());
         UserEntity user = userRepository.findById(applicationEntity.getApplicationCreator().getId()).orElseThrow(NullPointerException::new);
         user.setRoles(Set.of(roleRepository.findByName("ROLE_LENDER")));
+
         userRepository.save(user);
         return dto.getMessage();
     }
