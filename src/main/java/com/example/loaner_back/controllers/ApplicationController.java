@@ -105,10 +105,10 @@ public class ApplicationController {
     @PreAuthorize("hasRole('LENDER')")
     @PostMapping("/loans/{id}")
     public ResponseEntity<String> answerLoanApplication(@RequestBody ApplicationAnswerDto applicationAnswerDto, @PathVariable Long id) {
-        try {
+//        try {
             return new ResponseEntity(applicationService.answerApplication(applicationAnswerDto), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
+//        } catch (Exception ex) {
+//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+//        }
     }
 }
