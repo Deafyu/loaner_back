@@ -75,10 +75,13 @@ public class ApplicationService {
     public String answerApplication(ApplicationAnswerDto dto) {
         ApplicationEntity applicationEntity = applicationRepository.findById(dto.getApplicationId()).orElseThrow(NullPointerException::new);
         applicationEntity.setAccepted(dto.isAccepted());
-        UserEntity user = userRepository.findById(applicationEntity.getApplicationCreator().getId()).orElseThrow(NullPointerException::new);
-        user.setRoles(Set.of(roleRepository.findByName("ROLE_LENDER")));
 
-        userRepository.save(user);
+
+
+//        UserEntity user = userRepository.findById(applicationEntity.getApplicationCreator().getId()).orElseThrow(NullPointerException::new);
+//        user.setRoles(Set.of(roleRepository.findByName("ROLE_LENDER")));
+//
+//        userRepository.save(user);
         return dto.getMessage();
     }
 }
