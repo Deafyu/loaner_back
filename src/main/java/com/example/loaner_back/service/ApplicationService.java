@@ -49,6 +49,7 @@ public class ApplicationService {
         applicationEntity.setType(Type.LOAN);
         applicationEntity.setDescription(loanApplicationDto.getDescription());
         applicationEntity.setName(loanApplicationDto.getName());
+        applicationEntity.setLoanEntity(loanRepository.getById(((long) loanApplicationDto.getLoanId())));
         applicationRepository.save(applicationEntity);
     }
 

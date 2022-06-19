@@ -34,6 +34,9 @@ public class ApplicationEntity {
     @OneToOne
     UserEntity applicationReceiver;
 
+    @OneToOne
+    LoanEntity loanEntity;
+
     @Lob
     private byte[] fileData;
 }
