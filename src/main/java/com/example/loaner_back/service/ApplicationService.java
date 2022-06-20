@@ -4,6 +4,7 @@ import com.example.loaner_back.dto.Application.ApplicationAnswerDto;
 import com.example.loaner_back.dto.Application.LenderApplicationDto;
 import com.example.loaner_back.dto.Application.LoanApplicationDto;
 import com.example.loaner_back.entity.ApplicationEntity;
+import com.example.loaner_back.entity.LoanEntity;
 import com.example.loaner_back.entity.UserEntity;
 import com.example.loaner_back.repository.ApplicationRepository;
 import com.example.loaner_back.repository.LoanRepository;
@@ -76,7 +77,12 @@ public class ApplicationService {
     public String answerApplication(ApplicationAnswerDto dto) {
         ApplicationEntity applicationEntity = applicationRepository.findById(dto.getApplicationId()).orElseThrow(NullPointerException::new);
         applicationEntity.setAccepted(dto.isAccepted());
-
+        if (dto.isAccepted()) {
+            LoanEntity loanEntity = applicationEntity.getLoanEntity();
+            List<UserEntity> receivers = loanEntity.getLoanReceivers();
+            receivers.add(applicationEntity.getApplicationCreator());
+            loanEntity.setLoanReceivers(receivers);
+        }
         applicationRepository.save(applicationEntity);
 
 //        UserEntity user = userRepository.findById(applicationEntity.getApplicationCreator().getId()).orElseThrow(NullPointerException::new);

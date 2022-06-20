@@ -23,7 +23,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Transactional
 @FieldDefaults(makeFinal = true)
 @RestController
 public class HomeController {
