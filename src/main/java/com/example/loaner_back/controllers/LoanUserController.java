@@ -45,4 +45,13 @@ public class LoanUserController {
         }
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping(value = "/loans/{userId}")
+    public ResponseEntity<List<LoanEntity>> getAllUserLoans(@PathVariable long userId) {
+        try {
+            return ResponseEntity.ok(loanService.getUserLoansByUserId(userId));
+        } catch (Exception ex) {
+            return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
+        }
+    }
 }
